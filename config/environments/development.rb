@@ -35,6 +35,10 @@ Rails.application.configure do
 
   config.action_mailer.perform_caching = false
 
+  config.action_mailer.default_url_options = { 
+    host: 'https://3000-e1cc70e6-dd7f-4fe5-8df3-25ec1f6d3e61.ws-eu01.gitpod.io/', 
+    port: 3000 }
+
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log
 
