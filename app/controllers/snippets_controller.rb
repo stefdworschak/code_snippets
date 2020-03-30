@@ -4,6 +4,8 @@ class SnippetsController < ApplicationController
   before_action :set_snippet, only: [:show, :edit, :update, :destroy]
 
   def ensure_admin
+    puts "IS ADMIN?"
+    puts current_user.admin?
     unless current_user && current_user.admin?
       render :text => "Access Error Message", :status => :unauthorized
     end
@@ -77,6 +79,6 @@ class SnippetsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def snippet_params
-      params.fetch(:snippet, {})
+      params.require(:snippet).permit(:title, :code, :user_id)
     end
 end

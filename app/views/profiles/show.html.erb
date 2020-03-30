@@ -1,24 +1,33 @@
-<p id="notice"><%= notice %></p>
+<div class="row">
 
-<p>
-  <strong>Firstname:</strong>
-  <%= @profile.firstname %>
-</p>
+  <div class="col-3">
+  <p>
+    <img src="profile_placeholder.png" alt="Profile Image" class="profile-image" />
+  </p>
 
-<p>
-  <strong>Lastname:</strong>
-  <%= @profile.lastname %>
-</p>
+  <p>
+    <strong>Firstname:</strong>
+    <%= @profile.firstname %>
+  </p>
 
-<p>
-  <strong>Address:</strong>
-  <%= @profile.address %>
-</p>
+  <p>
+    <strong>Lastname:</strong>
+    <%= @profile.lastname %>
+  </p>
 
-<p>
-  <strong>User:</strong>
-  <%= @profile.user %>
-</p>
+  <p>
+    <strong>Address:</strong>
+    <%= @profile.address %>
+  </p>
+  <br />
+  <%= link_to 'Edit my profile', edit_profile_path(@profile) %>
+  </div>
 
-<%= link_to 'Edit', edit_profile_path(@profile) %> |
-<%= link_to 'Back', profiles_path %>
+
+  <div class="col-9">
+    
+    <%= render 'snips' %>
+  </div>
+
+
+</div>

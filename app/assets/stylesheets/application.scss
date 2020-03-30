@@ -13,3 +13,11 @@
  *= require_tree .
  *= require_self
  */
+ // Custom Bootstrap import
+ @import "bootstrap";
+
+ .container-fluid {
+   margin-top: 25px;
+   padding-left: 25px;
+   padding-right: 25px;
+ }

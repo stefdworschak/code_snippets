@@ -12,6 +12,15 @@
   <tbody>
     <% @snippets.each do |snippet| %>
       <tr>
+        <td>
+        <%= snippet['title'] %>
+        </td>
+        <td>
+        <%= snippet['user'] %>
+        </td>
+        <td>
+        <%= snippet['created_at'] %>
+        </td>
         <td><%= link_to 'Show', snippet %></td>
         <% if current_user.admin? %>
           <td><%= link_to 'Edit', edit_snippet_path(snippet) %></td>
