@@ -10,16 +10,26 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_25_232934) do
+ActiveRecord::Schema.define(version: 2020_03_25_235824) do
 
   create_table "comments", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text "comment_body"
+    t.integer "snippet_id"
+    t.integer "user_id"
+    t.index ["snippet_id"], name: "index_comments_on_snippet_id"
+    t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
   create_table "favourites", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "description"
+    t.integer "snippet_id"
+    t.integer "user_id"
+    t.index ["snippet_id"], name: "index_favourites_on_snippet_id"
+    t.index ["user_id"], name: "index_favourites_on_user_id"
   end
 
   create_table "profiles", force: :cascade do |t|
@@ -35,6 +45,10 @@ ActiveRecord::Schema.define(version: 2020_03_25_232934) do
   create_table "snippets", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "title"
+    t.text "code"
+    t.integer "user_id"
+    t.index ["user_id"], name: "index_snippets_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|

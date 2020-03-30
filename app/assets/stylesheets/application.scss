@@ -13,3 +13,28 @@
  *= require_tree .
  *= require_self
  */
+ // Custom Bootstrap import
+ @import "bootstrap";
+ // Custom Font Awesome import
+ @import "font-awesome";
+ // Google Fonts
+ @import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
+
+// Font Variables
+$roboto: 'Roboto', serif;   
+$open-sans: 'Open Sans', sans-serif;
+
+body {
+  font-family: $roboto;
+}
+
+ .container-fluid {
+   margin-top: 25px;
+   padding-left: 25px;
+   padding-right: 25px;
+ }
+
+ a:hover {
+  color: #007bff;
+  background: transparent;
+ }

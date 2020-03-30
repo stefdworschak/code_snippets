@@ -1,8 +1,9 @@
 class ProfilesController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_profile, only: [:show, :edit, :update, :destroy]
 
-  def signedinuserprofile profile =
-    Profile.find_by_user_id(current_user.id)
+  def signedinuserprofile 
+    profile = Profile.find_by_user_id(current_user.id)
     if profile.nil?
       redirect_to "/profiles/new"
     else
@@ -21,6 +22,7 @@ class ProfilesController < ApplicationController
   # GET /profiles/1
   # GET /profiles/1.json
   def show
+    @snippets = Snippet.where(:user_id => current_user.id)
   end
 
   # GET /profiles/new
