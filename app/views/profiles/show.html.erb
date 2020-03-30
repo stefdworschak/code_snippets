@@ -1,8 +1,12 @@
 <div class="row">
 
-  <div class="col-3">
+  <div class="col-2">
   <p>
-    <img src="profile_placeholder.png" alt="Profile Image" class="profile-image" />
+  <%= image_tag "profile_placeholder.png",
+  :class => "profile-image",
+  :alt => "Profile Image",
+  :width => "150",
+  :height => "150" %>
   </p>
 
   <p>
@@ -24,8 +28,8 @@
   </div>
 
 
-  <div class="col-9">
-    
+  <div class="col-10">
+    <%= render 'search' %>
     <%= render 'snips' %>
   </div>
 

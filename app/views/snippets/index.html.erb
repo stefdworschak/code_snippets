@@ -16,10 +16,11 @@
         <%= snippet['title'] %>
         </td>
         <td>
-        <%= snippet['user'] %>
+        <%= snippet['firstname'] %>
         </td>
         <td>
         <%= snippet['created_at'] %>
+
         </td>
         <td><%= link_to 'Show', snippet %></td>
         <% if current_user.admin? %>

@@ -1,3 +1,4 @@
+require 'uri'
 class SnippetsController < ApplicationController
   before_action :authenticate_user!
   before_action :ensure_admin, :only => [:edit, :destroy]
@@ -11,10 +12,32 @@ class SnippetsController < ApplicationController
     end
   end
 
+  def search
+
+  end
+
   # GET /snippets
   # GET /snippets.json
   def index
-    @snippets = Snippet.all
+    if not params.has_key?(:search)
+      snippets = Snippet.order('created_at DESC').all
+      @snippets = snippets.joins("INNER JOIN 'users' ON 'snippets'.'user_id' = 'users'.'id'")
+                          .joins("INNER JOIN 'profiles' ON  'users'.'id' = 'profiles'.'user_id'")
+                          .select('snippets.*, users.*, profiles.*')
+    else 
+      search = params[:search]
+      search_type = search[0]
+      keyword = URI.decode(search[1,search.length])
+      if search_type == ':'
+        @snippets = Snippet.where("title LIKE '%#{keyword}%' OR code LIKE '%#{keyword}%'").order('created_at DESC').all
+      elsif search_type == '#'
+        @snippets = Snippet.order('created_at DESC').all
+      elsif search_type == '@'
+        profile = Profile.where("firstname LIKE '%#{keyword}%' OR lastname LIKE '%#{keyword}%'")
+        @snippets = Snippet.where(:user_id => profile).all
+      else
+      end
+    end
   end
 
   # GET /snippets/1
