@@ -12,10 +12,6 @@ class SnippetsController < ApplicationController
     end
   end
 
-  def search
-
-  end
-
   # GET /snippets
   # GET /snippets.json
   def index

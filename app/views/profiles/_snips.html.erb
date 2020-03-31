@@ -1,5 +1,7 @@
-<div class="card">
-  <div class="card-header">My Snippets</div>
+<div class="card" id="display-snippets">
+  <div class="card-header">
+    <a class="btn btn-primary btn-sm" id="new-snippet"><%= fa_icon "plus-circle" %> Create Snippet</a>
+  </div>
   <div class="card-body">
     <% if @snippets.length == 0 %>
       You don't have any snippets yet.
