@@ -23,6 +23,7 @@ class ProfilesController < ApplicationController
   # GET /profiles/1.json
   def show
     @snippets = Snippet.where(:user_id => current_user.id)
+    @snippet = Snippet.new
   end
 
   # GET /profiles/new

@@ -71,3 +71,6 @@ gem 'bootstrap', '~> 4.4.1'
 
 # Font Awesome
 gem "font-awesome-rails"
+
+# Code Mirror
+gem 'codemirror-rails'

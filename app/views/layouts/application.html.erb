@@ -7,15 +7,28 @@
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    
   </head>
 
   <body>
-    <%= render "layouts/navbar" %>
+  <% if !current_page?('/users/sign_in') and 
+        !current_page?('/users/sign_up') and
+        !current_page?('/users/password/new') %>
+    <%= render "layouts/navbar" %> 
+  <% end %>
       <div class="container-fluid">
         <!--<p class="notice"><%= notice %></p>
         <p class="alert"><%= alert %></p>-->
-        
-        <%= yield %>
+        <!-- Search partial -->            
+        <!-- Main body -->
+        <div class="row">
+          <div class="col-12">
+              <%= yield %>    
+          </div>
+        </div>
+
+
+        </div>
       </div>
   </body>
 </html>

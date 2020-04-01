@@ -12,6 +12,7 @@
  *
  *= require_tree .
  *= require_self
+ *= require codemirror
  */
  // Custom Bootstrap import
  @import "bootstrap";
@@ -19,6 +20,8 @@
  @import "font-awesome";
  // Google Fonts
  @import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
+
+ @import "codemirror";
 
 // Font Variables
 $roboto: 'Roboto', serif;   
@@ -29,12 +32,106 @@ body {
 }
 
  .container-fluid {
-   margin-top: 25px;
+   /*margin-top: 25px;
    padding-left: 25px;
-   padding-right: 25px;
+   padding-right: 25px;*/
  }
 
  a:hover {
   color: #007bff;
   background: transparent;
  }
+
+ .search-icon, .search-text, .search-btn {
+   font-size:13px;
+ }
+
+ .search-nav-item {
+   height: 20px;  
+   margin-left: 10px;
+   margin-right: 25px;
+ }
+
+ .search-text, .search-text:focus, .search-btn:hover, .search-btn:active, .search-btn {
+  background:transparent;
+  outline: none;
+  box-shadow:0 0 0 0;
+  border:solid 1px darkgray;
+}
+
+.search-text, .search-text:focus {
+  border-right: 0px;
+}
+
+.search-btn:hover, .search-btn:active, .search-btn { 
+  border-left: 0px;
+}
+
+.search-btn:hover, .search-btn:active {
+  color: #007bff;
+}
+
+.search-text:focus {
+  color: white;
+  font-weight:400;  
+}
+
+.login-image, .signup-image {
+  background: {
+    image: asset_url("coding-1853305_1920.jpg");
+ }
+ background-size:cover;
+ background-repeat:no-repeat;
+ background-position: center;
+ width: 100vh;
+ height: 100vh;
+ border-left: 1px solid lightgray;
+}
+
+.field_with_errors {
+  width:100%;
+}
+#error_explanation {
+  color:black;
+  width:100%;
+}
+
+.row {
+  margin-top: 25px;
+}
+
+.login-form, .signup-form {
+  margin-left: auto;
+  margin-right: auto;
+  width:400px;
+  padding: 20px;
+  padding-left:40px;
+  padding-right:40px;
+  border-radius: 0px;
+  background: #343a40;
+  color: white;
+  box-shadow: 2px 2px 5px 1px #888888;
+}
+
+.login-form > a, .signup-form > a {
+  color:lightgray;
+}
+
+
+.login-form > a:hover, .login-form > a:active, .signup-form > a:hover, .signup-form > a:active {
+  color:#007bff;
+}
+
+.cs-logo {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+@media only screen and (max-width: 990px) { 
+  .search-nav-item {
+    height: 40px;
+    margin-top: 10px;
+    margin-left: 0px;
+    margin-right: 0px; 
+  }
+}
