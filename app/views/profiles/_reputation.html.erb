@@ -1,0 +1,23 @@
+<div class="reputation-display">
+    <span class="stackoverflow-color"><%= fa_icon "stack-overflow" %></span>
+    <span data-toggle="tooltip" data-placement="bottom" title="Reputation">
+        <strong><%= reputation['stackoverflow']['reputation'] %></strong>
+    </span>
+    <span data-toggle="tooltip" data-placement="bottom" title="Gold Badges">
+        <span class="gold-badge">&#x25cf;</span> <%= reputation['stackoverflow']['badges']['gold'] %>
+    </span>
+    <span data-toggle="tooltip" data-placement="bottom" title="Gold Badges">
+        <span class="silver-badge">&#x25cf;</span> <%= reputation['stackoverflow']['badges']['silver'] %>
+    </span>
+    <span data-toggle="tooltip" data-placement="bottom" title="Gold Badges">
+        <span class="bronze-badge">&#x25cf;</span> <%= reputation['stackoverflow']['badges']['bronze'] %>
+    </span>
+    &nbsp;
+    <span class="github-font-size"><%= fa_icon "github" %></span>
+        <%= reputation['github']['public_repos'] %> 
+    <span data-toggle="tooltip" data-placement="bottom" title="Public Repos"><%= fa_icon "copy" %></span>
+        <%= reputation['github']['following'] %> 
+    <span data-toggle="tooltip" data-placement="bottom" title="Following"><%= fa_icon "arrow-right" %></span>
+        <%= reputation['github']['followers'] %> 
+    <span data-toggle="tooltip" data-placement="bottom" title="Followers"><%= fa_icon "arrow-left" %></span>
+</div>

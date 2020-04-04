@@ -1,7 +1,9 @@
 require 'uri'
+require 'date'
+require 'external_user_info_adapter'
 class SnippetsController < ApplicationController
+  protect_from_forgery unless: -> { request.original_url.include?('snippets/') }
   before_action :authenticate_user!
-  before_action :ensure_admin, :only => [:edit, :destroy]
   before_action :set_snippet, only: [:show, :edit, :update, :destroy]
 
   def ensure_admin
@@ -57,11 +59,26 @@ class SnippetsController < ApplicationController
 
     respond_to do |format|
       if @snippet.save
-        format.html { redirect_to @snippet, notice: 'Snippet was successfully created.' }
+        format.html { redirect_to "/snippets/#{@snippet.id}", notice: 'Snippet was successfully created.' }
         format.json { render :show, status: :created, location: @snippet }
       else
         format.html { render :new }
         format.json { render json: @snippet.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  # POST /snippets/create_comment
+  def create_comment
+    @comment = Comment.new(comment_params)
+
+    respond_to do |format|
+      if @comment.save
+        format.html { redirect_to "/snippets/#{@comment.snippet_id}", notice: 'Comment was successfully created.' }
+        format.json { render :show, status: :created, location: @comment }
+      else
+        format.html { render :new }
+        format.json { render json: @comment.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -71,7 +88,7 @@ class SnippetsController < ApplicationController
   def update
     respond_to do |format|
       if @snippet.update(snippet_params)
-        format.html { redirect_to @snippet, notice: 'Snippet was successfully updated.' }
+        format.html { redirect_to "/snippets/#{@snippet.id}", notice: 'Snippet was successfully updated.' }
         format.json { render :show, status: :ok, location: @snippet }
       else
         format.html { render :edit }
@@ -85,7 +102,7 @@ class SnippetsController < ApplicationController
   def destroy
     @snippet.destroy
     respond_to do |format|
-      format.html { redirect_to snippets_url, notice: 'Snippet was successfully destroyed.' }
+      format.html { redirect_to '/snippets', notice: 'Snippet was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
@@ -93,11 +110,42 @@ class SnippetsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_snippet
+      now = Date.today
       @snippet = Snippet.find(params[:id])
+      @user = User.find(@snippet.user_id)
+      @profile = Profile.find(@snippet.user_id)
+      comments = Comment.where(:snippet_id => @snippet.id).all
+      @comments = comments.joins("INNER JOIN 'users' ON 'comments'.'user_id' = 'users'.'id'")
+                          .joins("INNER JOIN 'profiles' ON  'users'.'id' = 'profiles'.'user_id'")
+                          .select('comments.*, users.*, profiles.*')
+                  
+      @created_days_ago = (now - @snippet.created_at.to_date).to_i
+      @updated_days_ago = (now - @snippet.updated_at.to_date).to_i
+
+      @reputation = {}
+      @comments.each do |comment|
+        reputation = get_reputation_stats(comment.user_id)
+        @reputation[comment.user_id] = reputation
+      end
+    end
+
+    def get_reputation_stats user_id
+      settings = {
+        "github_api_user" => Rails.application.credentials.github_api_user,
+        "github_api_token" => Rails.application.credentials.github_api_token,
+        "stackoverflow_key" => Rails.application.credentials.stackoverflow_key
+      }
+      external_info = ExternalUserInfoAdapter.instance()
+      external_info.set_settings(settings)
+      return external_info.get_user_reputation(user_id)
     end
 
     # Only allow a list of trusted parameters through.
     def snippet_params
       params.require(:snippet).permit(:title, :code, :user_id)
+    end
+
+    def comment_params
+      params.require(:comment).permit(:comment_body, :snippet_id, :user_id)
     end
 end

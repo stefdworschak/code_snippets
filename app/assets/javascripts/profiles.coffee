@@ -5,23 +5,21 @@
 $ = jQuery
 editor = null
 $(document).on 'turbolinks:load', () =>
-    $('#new-snippet').on 'click', () =>
-        $('#display-snippets').hide()
-        $('.create-snippet').css('display', 'block')
-        myTextarea = $("#snippet_code")[0];
-        editor = CodeMirror.fromTextArea(myTextarea, {
-            lineNumbers: true,
-            matchBrackets: true,
-            mode: "text/x-csrc"
-        });
-        editor.on 'change', (event) =>
-            $('#char-value').text(editor.getValue().length)
-
-        editor.on 'change', (cm, changes) =>
-            editor.eachLine(lineFunc)
-
-
-lineFunc = (line) ->
-    if line.text.length > 80 
-        editor.addLineClass(line, "background", "tooLong")
-            
+    code_snippets = $('.snip-body > pre')
+    count = 0
+    for code_snippet in code_snippets
+        code = []
+        snip = code_snippets.eq(count)
+        lines = snip.text().split("\n")
+        snip.text("")
+        while lines.length > 0
+            line = lines.shift()
+            span = $("<span></span>")
+            span.text(line)
+            snip.append(span.text(line))
+            if lines.length > 0
+                snip.append("\n")
+        count++
+    
+    $('[data-toggle="tooltip"]').tooltip()
+    

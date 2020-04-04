@@ -32,9 +32,9 @@ body {
 }
 
  .container-fluid {
-   /*margin-top: 25px;
-   padding-left: 25px;
-   padding-right: 25px;*/
+   margin-left:10%;
+   margin-right:10%;
+   width: auto;
  }
 
  a:hover {
@@ -127,11 +127,29 @@ body {
   margin-bottom: 10px;
 }
 
+.back-btn {
+  border:1px solid lightgray;
+  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+  display:block;    
+  padding:5px;
+  margin-top: 10px;
+  font-size: 0.8em;
+}
+
+.back-btn > a:hover, .back-btn > a:active {
+  text-decoration: none;
+}
+
 @media only screen and (max-width: 990px) { 
   .search-nav-item {
     height: 40px;
     margin-top: 10px;
     margin-left: 0px;
     margin-right: 0px; 
+  }
+  .container-fluid {
+    margin-left: 0px;
+    margin-right: 0px;
   }
 }

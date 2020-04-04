@@ -1,35 +1,41 @@
-<div class="row">
+<div class="row profile-row">
 
   <div class="col-2">
   <p>
+  <% if @avatar.nil? %>
   <%= image_tag "profile_placeholder.png",
   :class => "profile-image",
   :alt => "Profile Image",
   :width => "150",
   :height => "150" %>
+  <% else %>
+  <img src="<%= @avatar %>" alt="profile_photo" class="profile-image" />
+  <% end %>
   </p>
 
   <p>
-    <strong>Firstname:</strong>
-    <%= @profile.firstname %>
+    <strong>Display Name:</strong><br />
+    <%= @profile.display_name %>
   </p>
 
   <p>
-    <strong>Lastname:</strong>
-    <%= @profile.lastname %>
+    <strong>GitHub:</strong><br />
+    <a href=""><%= @profile.github_name %></a>
   </p>
 
   <p>
-    <strong>Address:</strong>
-    <%= @profile.address %>
+    <strong>StackOverflow:</strong><br />
+    <a href=""><%= @profile.stackoverflow_name %></a>
   </p>
-  <br />
-  <%= link_to 'Edit my profile', edit_profile_path(@profile) %>
+  <P>
+    <% if current_user.id == @profile.user_id %>
+      <%= link_to 'Edit my profile', edit_profile_path(@profile) %>
+    <% end %>
+  </p>
   </div>
 
 
   <div class="col-10">
-    <%= render 'snippet_form', snippet: @snippet %>
     <%= render 'snips' %>
   </div>
 

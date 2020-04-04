@@ -1,4 +1,44 @@
-<p id="notice"><%= notice %></p>
+<!--<p id="notice"><%= notice %></p>-->
+<div class="row snippet-header-row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header show-card-header">
+                Author: <a href="/profiles/<%= @snippet.user_id %>">
+                <% if @profile.display_name.nil? %>
+                @<%= @user.email.split('@')[0] %>
+                <% else %>
+                <%= @profile.display_name %>
+                <% end %>
+                </a>
+                <span class="pull-right"> created <%= @created_days_ago %> days ago
+            </div>
+        </div>
+    </div>
+</div>
 
-<%= link_to 'Edit', edit_snippet_path(@snippet) %> |
-<%= link_to 'Back', snippets_path %>
+<div class="row show-snippet-row">
+    <div class="col-12">
+
+        <div class="card">
+            <div class="card-header bg-dark show-snippet-code-header">
+                <%= @snippet.title %>
+                <span class="pull-right">
+                    <% if current_user.id == @snippet.user_id %>
+                        <%= link_to 'Edit', edit_snippet_path(@snippet) %> | 
+                        <a href="#" class="copy-snippet" data-target="<%= @snippet.id %>">Copy</a> |
+                        <%= link_to 'Delete', @snippet, method: :delete, data: { confirm: 'Are you sure?' } %>
+                    <% else %>
+                        <a href="#" class="copy-snippet" data-target="<%= @snippet.id %>">Copy</a>
+                    <% end %>
+                </span>
+            </div>
+            <div class="card-body snip-body snip-body-no-bottom-margin">
+                <pre><%= @snippet.code %></pre>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<%= render 'comments' %>

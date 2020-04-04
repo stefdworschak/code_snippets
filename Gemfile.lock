@@ -49,6 +49,7 @@ GEM
     arel (9.0.0)
     autoprefixer-rails (9.7.5)
       execjs
+    basic_auth_http (0.0.1)
     bcrypt (3.1.13)
     bindex (0.8.1)
     bootsnap (1.4.6)
@@ -226,6 +227,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  basic_auth_http
   bootsnap (>= 1.1.0)
   bootstrap (~> 4.4.1)
   byebug

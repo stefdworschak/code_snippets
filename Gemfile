@@ -74,3 +74,6 @@ gem "font-awesome-rails"
 
 # Code Mirror
 gem 'codemirror-rails'
+
+# Custom BasicAuthHttp Gem
+gem 'basic_auth_http'
