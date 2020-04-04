@@ -1,6 +1,6 @@
-<h1>Editing Snippet</h1>
-
 <%= render 'form', snippet: @snippet %>
 
 <%= link_to 'Show', @snippet %> |
-<%= link_to 'Back', snippets_path %>
+<span class="back-btn">
+    <a href="#" onclick="window.history.back(-1)">Back</a>
+</span>

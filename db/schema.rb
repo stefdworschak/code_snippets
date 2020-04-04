@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_25_235824) do
+ActiveRecord::Schema.define(version: 2020_04_04_141700) do
 
   create_table "comments", force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -39,6 +39,12 @@ ActiveRecord::Schema.define(version: 2020_03_25_235824) do
     t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "display_name"
+    t.string "github_name"
+    t.string "stackoverflow_name"
+    t.string "stackoverflow_userid"
+    t.string "avatar_url"
+    t.string "avatar_url_source"
     t.index ["user_id"], name: "index_profiles_on_user_id"
   end
 

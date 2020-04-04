@@ -1,6 +1,6 @@
 <div class="card" id="display-snippets">
   <div class="card-header">
-    <a class="btn btn-primary btn-sm" id="new-snippet"><%= fa_icon "plus-circle" %> Create Snippet</a>
+    <a href="/snippets/new" class="btn btn-primary btn-sm" id="new-snippet"><%= fa_icon "plus-circle" %> Create Snippet</a>
   </div>
   <div class="card-body">
     <% if @snippets.length == 0 %>
@@ -10,10 +10,19 @@
     <% else %>
       <% @snippets.each do |snippet| %>
 
-        <h4 class="snip-header"><%= snippet.title %></h4>
-        <div class="snip-body"><pre><%= snippet.code %></pre></div>
-        <p><%= link_to 'Edit', edit_snippet_path(snippet) %> | 
-        <%= link_to 'Delete', snippet, method: :delete, data: { confirm: 'Are you sure?' } %></p> 
+        <div class="snip-card">
+          <h5 class="snip-header"><a href="/snippets/<%= snippet.id %>"><%= snippet.title %></a>
+            <span class="pull-right">
+              <%= link_to 'Edit', edit_snippet_path(snippet) %> | 
+              <a href="#" class="copy-snippet" data-target="<%= snippet.id %>">Copy</a> |
+              <%= link_to 'Delete', snippet, method: :delete, data: { confirm: 'Are you sure?' } %>            
+            </span>
+          </h5>
+          <div class="snip-body"><pre class="cm-read-only"><%= snippet.code %></pre></div>
+          <div class="snip-footer">
+            Created at <%= snippet.created_at %>
+          </div>
+        </div>
       <% end %>
     <% end %>
   </div>

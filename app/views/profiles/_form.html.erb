@@ -11,27 +11,82 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= form.label :firstname %>
-    <%= form.text_field :firstname %>
+  <div class="card create-snippet">
+  <div class="card-header">
+  <% if current_page?('/profiles/new') %>
+    Create User Profile
+  <% else %>
+    Update User Profile
+  <% end %>
   </div>
+  <div class="card-body">
 
-  <div class="field">
-    <%= form.label :lastname %>
-    <%= form.text_field :lastname %>
-  </div>
+    <div class="row">
+      <div class="col-md-12 col-lg-7">
 
-  <div class="field">
-    <%= form.label :address %>
-    <%= form.text_field :address %>
-  </div>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text">Display Name</span>
+            </div>
+              <%= form.text_field :display_name, class: "form-control", placeholder: "e.g. Alex Doe" %>
+              <div class="input-group-append">
+                <span class="input-group-text"><%= fa_icon "question-circle" %></span>
+            </div>
+          </div>
 
-  <div class="field">
-    <%= form.label :user_id %>
-    <%= form.text_field :user_id %>
-  </div>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text">GitHub Username</span>
+            </div>
+            <%= form.text_field :github_name, class: "form-control", placeholder: "e.g. alexdoe"  %>
+            <div class="input-group-append">
+                <span class="input-group-text"><%= fa_icon "question-circle" %></span>
+            </div>
+          </div>
 
-  <div class="actions">
-    <%= form.submit %>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text">StackOverflow Username</span>
+            </div>
+            <%= form.text_field :stackoverflow_name, class: "form-control", placeholder: "e.g adoe" %>
+          <div class="input-group-append">
+                <span class="input-group-text"><%= fa_icon "question-circle" %></span>
+            </div>
+          </div>
+          
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text">StackOverflow User ID</span>
+            </div>
+            <%= form.text_field :stackoverflow_userid, class: "form-control", placeholder: "e.g. 1234567"  %>
+          <div class="input-group-append">
+                <span class="input-group-text"><%= fa_icon "question-circle" %></span>
+            </div>
+          </div>
+
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text">Avatar Source</span>
+            </div>
+            
+            <%= form.select(:avatar_url_source, ['GitHub', 'StackOverflow'], {}, { :class => 'form-control' }) %>
+          <div class="input-group-append">
+                <span class="input-group-text"><%= fa_icon "question-circle" %></span>
+            </div>
+          </div>
+          <% if request.path_info.include?('edit') %>
+            <%= form.text_field :user_id, type: "hidden", value: profile.user_id %>
+          <% else %>
+            <%= form.text_field :user_id, type: "hidden", value: current_user.id %>
+          <% end %>
+          <div class="actions">
+            <%= form.submit :class => "btn btn-primary btn-sm" %>
+            <%= submit_tag("Reset", { :name => 'reset', :id => 'reset', :type => 'reset', :class => 'btn btn-danger btn-sm'}) %>
+          </div>
+
+       </div>
+    </div>    
+        
   </div>
+</div>  
 <% end %>

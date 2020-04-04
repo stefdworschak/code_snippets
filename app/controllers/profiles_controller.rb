@@ -1,5 +1,7 @@
+require 'external_user_info_adapter'
 class ProfilesController < ApplicationController
   before_action :authenticate_user!
+  before_action :ensure_admin, :only => [:index, :destroy]
   before_action :set_profile, only: [:show, :edit, :update, :destroy]
 
   def signedinuserprofile 
@@ -12,16 +14,33 @@ class ProfilesController < ApplicationController
     end
   end
 
+  def ensure_admin
+    unless current_user && current_user.admin?
+      redirect_to "/"
+    end
+  end
+    
+
 
   # GET /profiles
   # GET /profiles.json
   def index
-    @profiles = Profile.all
+    @profiles = Profile.joins("INNER JOIN 'users' ON 'users'.'id' = 'profiles'.'user_id'")
+                       .select("profiles.*, users.*")
   end
 
   # GET /profiles/1
   # GET /profiles/1.json
   def show
+    settings = {
+        "github_api_user" => Rails.application.credentials.github_api_user,
+        "github_api_token" => Rails.application.credentials.github_api_token,
+        "stackoverflow_key" => Rails.application.credentials.stackoverflow_key
+    }
+    external_info = ExternalUserInfoAdapter.instance()
+    external_info.set_settings(settings)
+    @avatar = external_info.get_user_avatar_url(params[:id])
+    puts @avatar
     @snippets = Snippet.where(:user_id => current_user.id)
     @snippet = Snippet.new
   end
@@ -47,7 +66,7 @@ class ProfilesController < ApplicationController
 
     respond_to do |format|
       if @profile.save
-        format.html { redirect_to @profile, notice: 'Profile was successfully created.' }
+        format.html { redirect_to '/home', notice: 'Profile was successfully created.' }
         format.json { render :show, status: :created, location: @profile }
       else
         format.html { render :new }
@@ -61,7 +80,7 @@ class ProfilesController < ApplicationController
   def update
     respond_to do |format|
       if @profile.update(profile_params)
-        format.html { redirect_to @profile, notice: 'Profile was successfully updated.' }
+        format.html { redirect_to '/home', notice: 'Profile was successfully updated.' }
         format.json { render :show, status: :ok, location: @profile }
       else
         format.html { render :edit }
@@ -88,6 +107,6 @@ class ProfilesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def profile_params
-      params.require(:profile).permit(:firstname, :lastname, :address, :user_id)
+      params.require(:profile).permit(:firstname, :lastname, :address, :user_id, :display_name, :github_name, :stackoverflow_name, :stackoverflow_userid, :avatar_url_source)
     end
 end

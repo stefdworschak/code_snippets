@@ -5,3 +5,12 @@
     border: 1px solid lightgray;
     border-radius: 5px;
 }
+
+.form-group.update-comment-formgroup,.form-group.update-comment-formgroup > input {
+    margin-bottom: 5px;
+    font-size: 0.8em;
+}
+
+.row.new-comment-row.update-comment-div {
+    display:none;
+}

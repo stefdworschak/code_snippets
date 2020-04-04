@@ -12,15 +12,73 @@
   padding-bottom:10px;
 }
 
+.snip-card {
+  margin-bottom: 35px;
+}
+
 .snip-body > pre {
-  border-radius: 8px;
+  border-radius: 2px;
   padding: 20px!important;
+  background-color: rgba(0, 0, 0, 0.03);
+  border: 1px solid rgba(0, 0, 0, 0.125);
 }
 
 a.btn.btn-primary.btn-sm {
   color: white;
 }
 
-div.create-snippet {
-  display: none;
+.snip-body > pre > span {
+  display: block;
+  line-height:0;
+  counter-increment: line;
+}
+.snip-body > pre > span:before {
+  counter-reset: none;
+  content: counter(line);
+  display: inline-block;
+  border-right: 1px solid #ddd;
+  padding: 0 .5em;
+  margin-right: .5em;
+  color: #888
+}
+
+.row.profile-row {
+  margin-top: 0px;
+}
+
+.gold-badge {
+  color:#ffcc01;
+}
+
+.silver-badge {
+  color: #b4b8bc;
+}
+
+.bronze-badge {
+  color: #d1a684; 
+}
+
+.reputation-display {
+  font-size: 0.8em;
+  margin-bottom: 5px;
+}
+
+
+.stackoverflow-color {
+  color: #fd7e14;
+}
+
+.github-font-size {
+  font-size: 1.2em;
+}
+
+.input-group-prepend > span.input-group-text {
+  width:200px
+}
+
+.input-group.mb-3 > .field_with_errors {
+  flex: 1 1 0%;
+  border-radius: 2px;
+  background-color: transparent;
+  border: 3px solid red;
 }

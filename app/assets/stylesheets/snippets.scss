@@ -1,3 +1,104 @@
 // Place all the styles related to the snippets controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+.cm-read-only {
+    margin-bottom:0px;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+}
+
+.snip-header > span {
+    font-size: 0.7em;
+}
+
+.snip-footer {
+    margin-bottom: 10px;
+    padding: 5px!important;
+    padding-left: 15px!important;
+    /*background-color: rgba(0, 0, 0, 0.03);*/
+    border: 1px solid rgba(0, 0, 0, 0.125);
+    font-size: 75%;
+    font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    border-top:0px;
+    border-bottom-left-radius: 2px;
+    border-bottom-right-radius: 2px;
+
+}
+
+.row.snippet-header-row {
+    margin-top: 0px;
+}
+
+.card.show-snippet-header {
+    display: block;
+    font-size: 0.9em;
+    padding: 10px;
+    background-color: rgba(0, 0, 0, 0.03);
+    border: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+.card-footer.snippet-comment-footer {
+    background:#dbefff;
+    padding: 3px 10px 0px 10px;
+}
+
+.card-header.comment-header {
+    font-size: 0.8em;
+    padding: 10px;
+}
+
+.col-1.comment-header > img {
+    border-radius: 50%;
+}
+
+.row.show-snippet-row {
+    margin-top: 10px;
+}
+
+.row.comment-header-row {
+    margin-top:0px;
+}
+
+.col-1.comment-header {
+    text-align: center;
+}
+
+.col-1.comment-header, .col-11.comment-header {
+    padding: 0px;
+
+}
+
+.card-header.show-card-header {
+    padding: 5px 10px 5px 10px;
+
+    background:#dbefff;
+    border-bottom:0px;
+    font-size: 0.75em;
+}
+
+.card-footer.show-card-footer {
+    background:white;
+}
+
+.card-header.show-snippet-code-header {
+    color: white;
+}
+
+.card-body.snip-body.snip-body-no-bottom-margin > pre {
+    margin-bottom: 0px;
+}
+
+.row.new-comment-row {
+    margin-top:0px;
+}
+.card.comment-card {
+    margin-bottom:10px;
+}
+
+.comment-actions {
+    font-size: 0.8em;
+}
+
+.card-header.bg-dark.show-snippet-code-header > span > a {
+    color: white;
+}
