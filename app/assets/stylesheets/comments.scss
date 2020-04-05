@@ -14,3 +14,11 @@
 .row.new-comment-row.update-comment-div {
     display:none;
 }
+
+.edit-comment {
+    cursor:pointer;
+}
+a.edit-comment:hover, a.edit-comment:active {
+    color: #007bff!important;
+    text-decoration: underline!important;
+}

@@ -19,25 +19,17 @@ class ExternalUserInfoAdapter
     end
 
     def get_user_avatar_url user_id
-        puts "USER ID"
-        puts user_id
         profile = Profile.find(user_id)
-        puts "PROFILE"
-        puts profile.avatar_url_source
         if profile['avatar_url_source'].to_s.empty?
-            puts "NO AVATAR"
             return nil
         elsif profile.avatar_url_source == "GitHub"
-            puts "GITHUB AVATAR"
             github = get_github_data(profile.github_name)
-            puts github
             if github['status'] != "200"
                 return nil
             else
                 return github['message'].fetch('avatar_url', nil)
             end
         else 
-            puts "SO AVATAR"
             stackoverflow = get_stack_overflow_data(profile.stackoverflow_name)
             if stackoverflow['status'] != "200"
                 return nil
@@ -86,14 +78,14 @@ class ExternalUserInfoAdapter
             stackoverflow_results.each do |user|
                 if profile.stackoverflow_name.to_s.empty?
                     stackoverflow_rep = default_items
-                elsif user['display_name'] == profile.stackoverflow_name
+                elsif user['display_name'].to_s.downcase == profile.stackoverflow_name.to_s.downcase
                     stackoverflow_rep = {
                         "badge_counts" => user.fetch('badge_counts', default_items['badge_counts']),
                         "reputation" => user.fetch('reputation', 0)
                     }
                 end
             end
-            return {"github" => github_rep, "stackoverflow" => stackoverflow_rep}
+            return {"status" => "200", "github" => github_rep, "stackoverflow" => stackoverflow_rep}
         end
     end
 

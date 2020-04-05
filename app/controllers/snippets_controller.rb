@@ -18,10 +18,10 @@ class SnippetsController < ApplicationController
   # GET /snippets.json
   def index
     if not params.has_key?(:search)
-      snippets = Snippet.order('created_at DESC').all
+      snippets = Snippet.order('snippets.created_at DESC').all
       @snippets = snippets.joins("INNER JOIN 'users' ON 'snippets'.'user_id' = 'users'.'id'")
                           .joins("INNER JOIN 'profiles' ON  'users'.'id' = 'profiles'.'user_id'")
-                          .select('snippets.*, users.*, profiles.*')
+                          .select('snippets.id, snippets.user_id, snippets.code, snippets.title, snippets.created_at, snippets.updated_at, users.email, profiles.display_name, profiles.github_name, profiles.stackoverflow_name')
     else 
       search = params[:search]
       search_type = search[0]
@@ -117,8 +117,8 @@ class SnippetsController < ApplicationController
       comments = Comment.where(:snippet_id => @snippet.id).all
       @comments = comments.joins("INNER JOIN 'users' ON 'comments'.'user_id' = 'users'.'id'")
                           .joins("INNER JOIN 'profiles' ON  'users'.'id' = 'profiles'.'user_id'")
-                          .select('comments.*, users.*, profiles.*')
-                  
+                          .select('comments.id, comments.comment_body, comments.created_at, comments.user_id, users.email, profiles.display_name, profiles.github_name, profiles.stackoverflow_name')
+
       @created_days_ago = (now - @snippet.created_at.to_date).to_i
       @updated_days_ago = (now - @snippet.updated_at.to_date).to_i
 

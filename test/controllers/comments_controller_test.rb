@@ -1,7 +1,9 @@
 require 'test_helper'
 
 class CommentsControllerTest < ActionDispatch::IntegrationTest
+  include Devise::Test::IntegrationHelpers # <-- Include helpers
   setup do
+    sign_in users(:one)
     @comment = comments(:one)
   end
 
@@ -17,10 +19,10 @@ class CommentsControllerTest < ActionDispatch::IntegrationTest
 
   test "should create comment" do
     assert_difference('Comment.count') do
-      post comments_url, params: { comment: {  } }
+      post comments_url, params: { comment: {id: 1, comment_body: "test", snippet_id: 1, user_id: 1} }
     end
 
-    assert_redirected_to comment_url(Comment.last)
+    assert_redirected_to 'http://www.example.com/snippets/1'
   end
 
   test "should show comment" do
@@ -34,8 +36,8 @@ class CommentsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update comment" do
-    patch comment_url(@comment), params: { comment: {  } }
-    assert_redirected_to comment_url(@comment)
+    patch comment_url(@comment), params: { comment: {comment_body: @comment.comment_body} }
+    assert_redirected_to 'http://www.example.com/snippets/1'
   end
 
   test "should destroy comment" do
@@ -43,6 +45,6 @@ class CommentsControllerTest < ActionDispatch::IntegrationTest
       delete comment_url(@comment)
     end
 
-    assert_redirected_to comments_url
+    assert_redirected_to 'http://www.example.com/snippets/1'
   end
 end

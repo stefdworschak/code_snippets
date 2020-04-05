@@ -1,4 +1,4 @@
-class AddForeignKeyToCommentsAndSnippets < ActiveRecord::Migration[5.2]
+class AddForeignKeyToComments < ActiveRecord::Migration[5.2]
   def change
     remove_reference :comments, :snippet, foreign_key: true
     add_reference :comments, :snippet, foreign_key: true, on_delete: :cascade

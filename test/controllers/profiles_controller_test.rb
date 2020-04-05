@@ -1,7 +1,9 @@
 require 'test_helper'
 
 class ProfilesControllerTest < ActionDispatch::IntegrationTest
+  include Devise::Test::IntegrationHelpers # <-- Include helpers
   setup do
+    sign_in users(:one)
     @profile = profiles(:one)
   end
 
@@ -17,10 +19,10 @@ class ProfilesControllerTest < ActionDispatch::IntegrationTest
 
   test "should create profile" do
     assert_difference('Profile.count') do
-      post profiles_url, params: { profile: { address: @profile.address, firstname: @profile.firstname, lastname: @profile.lastname, user_id: @profile.user_id } }
+      post profiles_url, params: { profile: { display_name: "Test name", user_id: 1  } }
     end
 
-    assert_redirected_to profile_url(Profile.last)
+    assert_redirected_to '/'
   end
 
   test "should show profile" do
@@ -34,8 +36,8 @@ class ProfilesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update profile" do
-    patch profile_url(@profile), params: { profile: { address: @profile.address, firstname: @profile.firstname, lastname: @profile.lastname, user_id: @profile.user_id } }
-    assert_redirected_to profile_url(@profile)
+    patch profile_url(@profile), params: { profile: { display_name: @profile.display_name, user_id: @profile.user_id } }
+    assert_response :success
   end
 
   test "should destroy profile" do

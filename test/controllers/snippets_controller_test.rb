@@ -1,7 +1,9 @@
 require 'test_helper'
 
 class SnippetsControllerTest < ActionDispatch::IntegrationTest
+  include Devise::Test::IntegrationHelpers # <-- Include helpers
   setup do
+    sign_in users(:one)
     @snippet = snippets(:one)
   end
 
@@ -17,7 +19,7 @@ class SnippetsControllerTest < ActionDispatch::IntegrationTest
 
   test "should create snippet" do
     assert_difference('Snippet.count') do
-      post snippets_url, params: { snippet: {  } }
+      post snippets_url, params: { snippet: { title: @snippet.title, code: @snippet.code, user_id: @snippet.user_id } }
     end
 
     assert_redirected_to snippet_url(Snippet.last)
@@ -34,7 +36,7 @@ class SnippetsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update snippet" do
-    patch snippet_url(@snippet), params: { snippet: {  } }
+    patch snippet_url(@snippet), params: { snippet: { title: @snippet.title, code: @snippet.code, user_id: @snippet.user_id } }
     assert_redirected_to snippet_url(@snippet)
   end
 

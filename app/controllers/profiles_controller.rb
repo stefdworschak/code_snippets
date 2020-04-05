@@ -26,7 +26,7 @@ class ProfilesController < ApplicationController
   # GET /profiles.json
   def index
     @profiles = Profile.joins("INNER JOIN 'users' ON 'users'.'id' = 'profiles'.'user_id'")
-                       .select("profiles.*, users.*")
+                       .select("profiles.*, users.email")
   end
 
   # GET /profiles/1
@@ -40,7 +40,6 @@ class ProfilesController < ApplicationController
     external_info = ExternalUserInfoAdapter.instance()
     external_info.set_settings(settings)
     @avatar = external_info.get_user_avatar_url(params[:id])
-    puts @avatar
     @snippets = Snippet.where(:user_id => current_user.id)
     @snippet = Snippet.new
   end
@@ -66,7 +65,7 @@ class ProfilesController < ApplicationController
 
     respond_to do |format|
       if @profile.save
-        format.html { redirect_to '/home', notice: 'Profile was successfully created.' }
+        format.html { redirect_to '/', notice: 'Profile was successfully created.' }
         format.json { render :show, status: :created, location: @profile }
       else
         format.html { render :new }
@@ -80,7 +79,7 @@ class ProfilesController < ApplicationController
   def update
     respond_to do |format|
       if @profile.update(profile_params)
-        format.html { redirect_to '/home', notice: 'Profile was successfully updated.' }
+        format.html { redirect_to '/', notice: 'Profile was successfully updated.' }
         format.json { render :show, status: :ok, location: @profile }
       else
         format.html { render :edit }

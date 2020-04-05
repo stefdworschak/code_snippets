@@ -11,6 +11,10 @@
     </div>
   <% end %>
 
+  <%= form.text_field :comment_body, class: "form-control", placeholder: "e.g. Alex Doe" %>
+  <%= form.text_field :snippet_id %>
+  <%= form.text_field :user_id %>
+
   <div class="actions">
     <%= form.submit %>
   </div>

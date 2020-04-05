@@ -1,13 +1,37 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  firstname: MyString
-  lastname: MyString
-  address: MyString
+  firstname: Test
+  lastname: Admin
+  address: Mainstreet
+  display_name: Test Admin
+  github_name: stefdworschak
+  stackoverflow_name: sdworschak
+  avatar_url_source: GitHub
   user: one
+  user_id: 1
+  id: 1
 
 two:
-  firstname: MyString
-  lastname: MyString
-  address: MyString
+  firstname: Test
+  lastname: User
+  address: Mainstreet
+  display_name: Test Admin
+  github_name: stefdworschak
+  stackoverflow_name: sdworschak
+  avatar_url_source: StackOverflow
   user: two
+  user_id: 2
+  id: 2
+
+three:
+  firstname: Test
+  lastname: User_Two
+  address: Mainstreet
+  display_name: Test Admin
+  github_name: stefdworschak
+  stackoverflow_name: sdworschak
+  avatar_url_source: nil
+  user: three
+  user_id: 3
+  id: 3

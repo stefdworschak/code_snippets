@@ -24,9 +24,8 @@
 
     <span class="pull-right">
         <% if current_user.id == comment.user_id %>
-            <a role="link" class="edit-comment" data-comment-id="<%= comment.id %>">Edit</a> | 
-            <%= comment %>
-            <%= link_to 'Delete', comment, method: :delete, data: { confirm: 'Are you sure?' } %>
+            <a role="link" class="edit-comment" data-comment-id="<%= comment.user_id %>">Edit</a> | 
+            <a data-confirm="Are you sure?" rel="nofollow" data-method="delete" href="/comments/<%= comment.id %>">Delete</a>
         <% end %>
     </span>
 
