@@ -24,13 +24,15 @@ class SnippetsController < ApplicationController
       search = params[:search]
       search_type = search[0]
       keyword = URI.decode(search[1,search.length])
+      snippets = Snippet.joins("INNER JOIN profiles ON snippets.user_id = profiles.user_id")
+                        .joins("INNER JOIN users ON snippets.user_id = users.id")
+                        .select("snippets.*, users.email, profiles.display_name, profiles.github_name, profiles.stackoverflow_name")
       if search_type == ':'
-        @snippets = Snippet.where("title LIKE '%#{keyword}%' OR code LIKE '%#{keyword}%'").order('created_at DESC').all
+        @snippets = snippets.where("title LIKE '%#{keyword}%' OR code LIKE '%#{keyword}%'").order('created_at DESC').all
       elsif search_type == '@'
-        profile = Profile.where("firstname LIKE '%#{keyword}%' OR lastname LIKE '%#{keyword}%'")
-        @snippets = Snippet.where(:user_id => profile.id).all
+        @snippets = snippets.where("display_name LIKE '%#{keyword}%' OR github_name LIKE '%#{keyword}%' OR stackoverflow_name LIKE '%#{keyword}%'").order('created_at DESC').all
       else
-        @snippets = Snippet.order('created_at DESC').all
+        @snippets = snippets.where("title LIKE '%#{keyword}%' OR code LIKE '%#{keyword}%' OR display_name LIKE '%#{keyword}%' OR github_name LIKE '%#{keyword}%' OR stackoverflow_name LIKE '%#{keyword}%'").order('created_at DESC').all
       end
     end
   end
