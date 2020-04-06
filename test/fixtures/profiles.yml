@@ -1,9 +1,6 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  firstname: Test
-  lastname: Admin
-  address: Mainstreet
   display_name: Test Admin
   github_name: stefdworschak
   stackoverflow_name: sdworschak
@@ -13,9 +10,6 @@ one:
   id: 1
 
 two:
-  firstname: Test
-  lastname: User
-  address: Mainstreet
   display_name: Test Admin
   github_name: stefdworschak
   stackoverflow_name: sdworschak
@@ -25,9 +19,6 @@ two:
   id: 2
 
 three:
-  firstname: Test
-  lastname: User_Two
-  address: Mainstreet
   display_name: Test Admin
   github_name: stefdworschak
   stackoverflow_name: sdworschak
