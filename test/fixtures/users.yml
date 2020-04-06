@@ -23,3 +23,9 @@ three: {
   id: 3,
   admin: false
 }
+
+four: {
+  email: "tester4@csnippet.com",
+  id: 4,
+  admin: false
+}
