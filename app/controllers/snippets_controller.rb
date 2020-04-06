@@ -7,8 +7,6 @@ class SnippetsController < ApplicationController
   before_action :set_snippet, only: [:show, :edit, :update, :destroy]
 
   def ensure_admin
-    puts "IS ADMIN?"
-    puts current_user.admin?
     unless current_user && current_user.admin?
       render :text => "Access Error Message", :status => :unauthorized
     end

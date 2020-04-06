@@ -17,6 +17,14 @@ class SnippetsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test "should create comment" do
+    assert_difference('Comment.count') do
+      post '/snippets/create_comment', params: { comment: { comment_body: "Test Comment", snippet_id: @snippet.id, user_id: @snippet.user_id } }
+    end
+
+    assert_redirected_to "/snippets/#{@snippet.id}"
+  end
+
   test "should create snippet" do
     assert_difference('Snippet.count') do
       post snippets_url, params: { snippet: { title: @snippet.title, code: @snippet.code, user_id: @snippet.user_id } }

@@ -46,7 +46,6 @@ class AboutControllerTest < ActionDispatch::IntegrationTest
 
   test "Get Combined Reputation" do
     combined_rep = @reputation.get_user_reputation(1)
-    puts combined_rep
     assert_equal("200", combined_rep['status'],
     "Expected StackOverflow user stats to be retrieved, but got #{combined_rep['status']} error")
 

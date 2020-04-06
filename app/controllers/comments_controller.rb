@@ -1,4 +1,5 @@
 class CommentsController < ApplicationController
+  before_action :authenticate_user!
   protect_from_forgery unless: -> { request.original_url.include?('snippets') }
   before_action :set_comment, only: [:show, :edit, :update, :destroy]
 
