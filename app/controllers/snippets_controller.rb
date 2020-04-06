@@ -24,6 +24,8 @@ class SnippetsController < ApplicationController
                       .order('snippets.created_at DESC')
     if not params.has_key?(:search)
       @snippets = snippets.all
+    elsif params[:search].to_s.empty?
+      @snippets = []
     else 
       search = params[:search]
       search_type = search[0]
