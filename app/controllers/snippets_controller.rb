@@ -15,24 +15,35 @@ class SnippetsController < ApplicationController
   # GET /snippets
   # GET /snippets.json
   def index
+    snippets = Snippet.joins("INNER JOIN users ON snippets.user_id = users.id")
+                      .joins("INNER JOIN profiles ON users.id = profiles.user_id")
+                      .select("snippets.id, snippets.user_id, snippets.code, " \
+                              "snippets.title, snippets.created_at, snippets.updated_at, " \
+                              "users.email, profiles.display_name, profiles.github_name, " \
+                              "profiles.stackoverflow_name")
+                      .order('snippets.created_at DESC')
     if not params.has_key?(:search)
-      snippets = Snippet.order('snippets.created_at DESC').all
-      @snippets = snippets.joins("INNER JOIN users ON snippets.user_id = users.id")
-                          .joins("INNER JOIN profiles ON users.id = profiles.user_id")
-                          .select("snippets.id, snippets.user_id, snippets.code, snippets.title, snippets.created_at, snippets.updated_at, users.email, profiles.display_name, profiles.github_name, profiles.stackoverflow_name")
+      @snippets = snippets.all
     else 
       search = params[:search]
       search_type = search[0]
       keyword = URI.decode(search[1,search.length])
-      snippets = Snippet.joins("INNER JOIN profiles ON snippets.user_id = profiles.user_id")
-                        .joins("INNER JOIN users ON snippets.user_id = users.id")
-                        .select("snippets.*, users.email, profiles.display_name, profiles.github_name, profiles.stackoverflow_name")
       if search_type == ':'
-        @snippets = snippets.where("title LIKE '%#{keyword}%' OR code LIKE '%#{keyword}%'").order('created_at DESC').all
+        @snippets = snippets.where("LOWER(title) LIKE '%#{keyword}%'" \
+                                   " OR LOWER(code) LIKE '%#{keyword}%'")
+                            .order('snippets.created_at DESC').all
       elsif search_type == '@'
-        @snippets = snippets.where("display_name LIKE '%#{keyword}%' OR github_name LIKE '%#{keyword}%' OR stackoverflow_name LIKE '%#{keyword}%'").order('created_at DESC').all
+        @snippets = snippets.where("LOWER(display_name) LIKE '%#{keyword}%'" \
+                                   " OR LOWER(github_name) LIKE '%#{keyword}%'" \
+                                   " OR LOWER(stackoverflow_name) LIKE '%#{keyword}%'")
+                                   .order('snippets.created_at DESC').all
       else
-        @snippets = snippets.where("title LIKE '%#{keyword}%' OR code LIKE '%#{keyword}%' OR display_name LIKE '%#{keyword}%' OR github_name LIKE '%#{keyword}%' OR stackoverflow_name LIKE '%#{keyword}%'").order('created_at DESC').all
+        @snippets = snippets.where("LOWER(title LIKE '%#{keyword}%'" \
+                                   " OR LOWER(code) LIKE '%#{keyword}%'" \
+                                   " OR LOWER(display_name) LIKE '%#{keyword}%'" \
+                                   " OR LOWER(github_name) LIKE '%#{keyword}%'" \
+                                   " OR LOWER(stackoverflow_name) LIKE '%#{keyword}%'")
+                            .order('snippets.created_at DESC').all
       end
     end
   end
