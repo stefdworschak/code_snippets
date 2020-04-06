@@ -17,21 +17,20 @@ class SnippetsController < ApplicationController
   def index
     if not params.has_key?(:search)
       snippets = Snippet.order('snippets.created_at DESC').all
-      @snippets = snippets.joins("INNER JOIN 'users' ON 'snippets'.'user_id' = 'users'.'id'")
-                          .joins("INNER JOIN 'profiles' ON  'users'.'id' = 'profiles'.'user_id'")
-                          .select('snippets.id, snippets.user_id, snippets.code, snippets.title, snippets.created_at, snippets.updated_at, users.email, profiles.display_name, profiles.github_name, profiles.stackoverflow_name')
+      @snippets = snippets.joins("INNER JOIN users ON snippets.user_id = users.id")
+                          .joins("INNER JOIN profiles ON users.id = profiles.user_id")
+                          .select("snippets.id, snippets.user_id, snippets.code, snippets.title, snippets.created_at, snippets.updated_at, users.email, profiles.display_name, profiles.github_name, profiles.stackoverflow_name")
     else 
       search = params[:search]
       search_type = search[0]
       keyword = URI.decode(search[1,search.length])
       if search_type == ':'
         @snippets = Snippet.where("title LIKE '%#{keyword}%' OR code LIKE '%#{keyword}%'").order('created_at DESC').all
-      elsif search_type == '#'
-        @snippets = Snippet.order('created_at DESC').all
       elsif search_type == '@'
         profile = Profile.where("firstname LIKE '%#{keyword}%' OR lastname LIKE '%#{keyword}%'")
-        @snippets = Snippet.where(:user_id => profile).all
+        @snippets = Snippet.where(:user_id => profile.id).all
       else
+        @snippets = Snippet.order('created_at DESC').all
       end
     end
   end
