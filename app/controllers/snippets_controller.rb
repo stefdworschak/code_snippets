@@ -112,9 +112,9 @@ class SnippetsController < ApplicationController
       @user = User.find(@snippet.user_id)
       @profile = Profile.find(@snippet.user_id)
       comments = Comment.where(:snippet_id => @snippet.id).all
-      @comments = comments.joins("INNER JOIN 'users' ON 'comments'.'user_id' = 'users'.'id'")
-                          .joins("INNER JOIN 'profiles' ON  'users'.'id' = 'profiles'.'user_id'")
-                          .select('comments.id, comments.comment_body, comments.created_at, comments.user_id, users.email, profiles.display_name, profiles.github_name, profiles.stackoverflow_name')
+      @comments = comments.joins("INNER JOIN users ON comments.user_id = users.id")
+                          .joins("INNER JOIN profiles ON users.id = profiles.user_id")
+                          .select("comments.id, comments.comment_body, comments.created_at, comments.user_id, users.email, profiles.display_name, profiles.github_name, profiles.stackoverflow_name")
 
       @created_days_ago = (now - @snippet.created_at.to_date).to_i
       @updated_days_ago = (now - @snippet.updated_at.to_date).to_i

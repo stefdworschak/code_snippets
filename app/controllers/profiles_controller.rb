@@ -25,7 +25,7 @@ class ProfilesController < ApplicationController
   # GET /profiles
   # GET /profiles.json
   def index
-    @profiles = Profile.joins("INNER JOIN 'users' ON 'users'.'id' = 'profiles'.'user_id'")
+    @profiles = Profile.joins("INNER JOIN users ON users.id = profiles.user_id")
                        .select("profiles.*, users.email")
   end
 
