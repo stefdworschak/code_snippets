@@ -47,7 +47,7 @@ class ProfilesIntegrationTest < ActionDispatch::IntegrationTest
 
     patch profile_url(@profile),
     params: { profile: { display_name: "Change Username", github_name: "Change GitHub", stackoverflow_name: "Change StackOverflow" } }
-    @profile = Profile.find(@profile.id)
+    @profile = Profile.find_by_user_id(@profile.id)
     assert_equal("Change Username", @profile.display_name)
     assert_equal("Change GitHub", @profile.github_name)
     assert_equal("Change StackOverflow", @profile.stackoverflow_name)

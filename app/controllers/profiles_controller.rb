@@ -37,9 +37,19 @@ class ProfilesController < ApplicationController
         "github_api_token" => ENV['GITHUB_API_TOKEN'],
         "stackoverflow_key" => ENV['STACKOVERFLOW_KEY']
     }
-    external_info = ExternalUserInfoAdapter.instance()
-    external_info.set_settings(settings)
-    @avatar = external_info.get_user_avatar_url(params[:id])
+    
+    profile = Profile.find_by_user_id(current_user.id)
+    if profile.avatar_url.nil?
+      external_info = ExternalUserInfoAdapter.instance()
+      external_info.set_settings(settings)
+      @avatar = external_info.get_user_avatar_url(params[:id])
+      if !@avatar.nil?
+        user = Profile.find_by_user_id(current_user.id)
+        user.update(avatar_url: @avatar)
+      end
+    else 
+      @avatar = profile.avatar_url
+    end
     @snippets = Snippet.where(:user_id => current_user.id)
     @snippet = Snippet.new
   end

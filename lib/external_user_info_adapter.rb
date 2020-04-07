@@ -19,7 +19,8 @@ class ExternalUserInfoAdapter
     end
 
     def get_user_avatar_url user_id
-        profile = Profile.find(user_id)
+        profile = Profile.find_by_user_id(user_id)
+        puts profile.to_yaml
         if profile['avatar_url_source'].to_s.empty?
             return nil
         elsif profile.avatar_url_source == "GitHub"
@@ -53,14 +54,17 @@ class ExternalUserInfoAdapter
         if user_id.nil? 
             return {"status" => "404", "message" => "User data not found", "data" => []}
         else
-            profile = Profile.find(user_id)
+            profile = Profile.find_by_user_id(user_id)
+            puts "PROFILE!!!!!!!!!!!!!!!!!"
+            puts profile.to_yaml
             user = User.find(user_id)
             github = get_github_data(profile.github_name)
             github_rep = {
                 "followers" => github['message'].fetch('followers', 0),
                 "following" => github['message'].fetch('following', 0),
                 "public_repos" => github['message'].fetch('public_repos', 0),
-                "public_gists" => github['message'].fetch('public_gists', 0)
+                "public_gists" => github['message'].fetch('public_gists', 0),
+                "avatar_url" => github['message'].fetch('avatar_url', nil),
             }
 
             stackoverflow = get_stack_overflow_data(profile.stackoverflow_name)
@@ -71,7 +75,8 @@ class ExternalUserInfoAdapter
                         "bronze" => 0
                     },
                     "reputation" => 0,
-                    "display_name" => nil
+                    "display_name" => nil,
+                    "profile_image" => github['message'].fetch('profile_image', nil),
                 }
             stackoverflow_results = stackoverflow['message'].fetch('items',[default_items])
             # Neeeded because therer could be multiple partial matches as well
