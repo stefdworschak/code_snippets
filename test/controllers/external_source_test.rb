@@ -13,9 +13,9 @@ class AboutControllerTest < ActionDispatch::IntegrationTest
 
   test "Set Settings" do
     settings = {
-        "github_api_user" => Rails.application.credentials.github_api_user,
-        "github_api_token" => Rails.application.credentials.github_api_token,
-        "stackoverflow_key" => Rails.application.credentials.stackoverflow_key
+        "github_api_user" => ENV['GITHUB_API_USER'],
+        "github_api_token" => ENV['GITHUB_API_TOKEN'],
+        "stackoverflow_key" => ENV['STACKOVERFLOW_KEY']
     }
     @reputation.set_settings(settings)
     assert_equal(@reputation.get_settings(), settings, 

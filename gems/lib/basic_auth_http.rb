@@ -6,8 +6,8 @@ class BasicAuthHTTP
   @password=nil
 
   def initialize user=nil, password=nil
-    @username = user     # Rails.application.credentials.github_api_user
-    @password = password # Rails.application.credentials.github_api_token
+    @username = user     # GITHUB_API_USER
+    @password = password # GITHUB_API_TOKEN
   end
 
   def get_user

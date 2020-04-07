@@ -90,3 +90,6 @@ group :production do
   gem 'pg'
   gem 'rails_12factor'
 end
+
+# For ENV variable management
+gem 'figaro'

@@ -33,9 +33,9 @@ class ProfilesController < ApplicationController
   # GET /profiles/1.json
   def show
     settings = {
-        "github_api_user" => Rails.application.credentials.github_api_user,
-        "github_api_token" => Rails.application.credentials.github_api_token,
-        "stackoverflow_key" => Rails.application.credentials.stackoverflow_key
+        "github_api_user" => ENV['GITHUB_API_USER'],
+        "github_api_token" => ENV['GITHUB_API_TOKEN'],
+        "stackoverflow_key" => ENV['STACKOVERFLOW_KEY']
     }
     external_info = ExternalUserInfoAdapter.instance()
     external_info.set_settings(settings)
