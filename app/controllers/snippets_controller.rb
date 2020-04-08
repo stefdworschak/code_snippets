@@ -53,6 +53,7 @@ class SnippetsController < ApplicationController
   # GET /snippets/1
   # GET /snippets/1.json
   def show
+    @current_profile = Profile.find_by_user_id(current_user.id)
   end
 
   # GET /snippets/new
@@ -125,14 +126,18 @@ class SnippetsController < ApplicationController
       now = Date.today
       @snippet = Snippet.find(params[:id])
       @user = User.find(@snippet.user_id)
-      @profile = Profile.find(@snippet.user_id)
+      @profile = Profile.find_by_user_id(@snippet.user_id)
       comments = Comment.where(:snippet_id => @snippet.id).all
       @comments = comments.joins("INNER JOIN users ON comments.user_id = users.id")
                           .joins("INNER JOIN profiles ON users.id = profiles.user_id")
-                          .select("comments.id, comments.comment_body, comments.created_at, comments.user_id, users.email, profiles.display_name, profiles.github_name, profiles.stackoverflow_name")
+                          .select("comments.id, comments.comment_body, comments.created_at, " \
+                                  "comments.user_id, users.email, profiles.display_name, " \
+                                  "profiles.github_name, profiles.stackoverflow_name, " \
+                                  "profiles.avatar_url, profiles.avatar_url_source")
 
       @created_days_ago = (now - @snippet.created_at.to_date).to_i
       @updated_days_ago = (now - @snippet.updated_at.to_date).to_i
+      @avatar = @profile.avatar_url
 
       @reputation = {}
       @comments.each do |comment|
@@ -143,9 +148,9 @@ class SnippetsController < ApplicationController
 
     def get_reputation_stats user_id
       settings = {
-        "github_api_user" => Rails.application.credentials.github_api_user,
-        "github_api_token" => Rails.application.credentials.github_api_token,
-        "stackoverflow_key" => Rails.application.credentials.stackoverflow_key
+        "github_api_user" => ENV['GITHUB_API_USER'],
+        "github_api_token" => ENV['GITHUB_API_TOKEN'],
+        "stackoverflow_key" => ENV['STACKOVERFLOW_KEY']
       }
       external_info = ExternalUserInfoAdapter.instance()
       external_info.set_settings(settings)

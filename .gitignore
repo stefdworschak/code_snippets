@@ -32,3 +32,5 @@
 # Test files
 test.json
 test2.json
+# Ignore application configuration
+/config/application.yml
