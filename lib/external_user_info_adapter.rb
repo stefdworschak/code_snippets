@@ -20,8 +20,9 @@ class ExternalUserInfoAdapter
 
     def get_user_avatar_url user_id
         profile = Profile.find_by_user_id(user_id)
-        puts profile.to_yaml
-        if profile['avatar_url_source'].to_s.empty?
+        if profile.nil?
+            return nil
+        elsif profile['avatar_url_source'].to_s.empty?
             return nil
         elsif profile.avatar_url_source == "GitHub"
             github = get_github_data(profile.github_name)
@@ -55,8 +56,6 @@ class ExternalUserInfoAdapter
             return {"status" => "404", "message" => "User data not found", "data" => []}
         else
             profile = Profile.find_by_user_id(user_id)
-            puts "PROFILE!!!!!!!!!!!!!!!!!"
-            puts profile.to_yaml
             user = User.find(user_id)
             github = get_github_data(profile.github_name)
             github_rep = {

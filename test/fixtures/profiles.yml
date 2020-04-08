@@ -5,7 +5,7 @@ one:
   github_name: stefdworschak
   stackoverflow_name: sdworschak
   avatar_url_source: GitHub
-  user: one
+  avatar_url_source: nil
   user_id: 1
   id: 1
 
@@ -14,7 +14,7 @@ two:
   github_name: stefdworschak
   stackoverflow_name: sdworschak
   avatar_url_source: StackOverflow
-  user: two
+  avatar_url_source: nil
   user_id: 2
   id: 2
 
@@ -23,6 +23,6 @@ three:
   github_name: stefdworschak
   stackoverflow_name: sdworschak
   avatar_url_source: nil
-  user: three
+  avatar_url_source: nil
   user_id: 3
   id: 3

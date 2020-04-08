@@ -54,7 +54,6 @@ class SnippetsController < ApplicationController
   # GET /snippets/1.json
   def show
     @current_profile = Profile.find_by_user_id(current_user.id)
-    puts @current_profile.nil?
   end
 
   # GET /snippets/new
