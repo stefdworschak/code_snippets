@@ -23,6 +23,7 @@ ActiveRecord::Schema.define(version: 2020_04_06_222041) do
   end
 
   create_table "profiles", force: :cascade do |t|
+    t.string "address"
     t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
