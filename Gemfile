@@ -74,7 +74,7 @@ gem "font-awesome-rails"
 gem 'codemirror-rails'
 
 # Custom BasicAuthHttp Gem
-gem 'basic_auth_http'
+gem 'basic_auth_http', :git => "https://github.com/stefdworschak/basic_auth_http.git"
 
 # Testing
 group :test do
