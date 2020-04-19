@@ -37,7 +37,7 @@ class ProfilesControllerTest < ActionDispatch::IntegrationTest
 
   test "should update profile" do
     patch profile_url(@profile), params: { profile: { display_name: @profile.display_name, user_id: @profile.user_id } }
-    assert_response :success
+    assert_response :redirect
   end
 
   test "should destroy profile" do

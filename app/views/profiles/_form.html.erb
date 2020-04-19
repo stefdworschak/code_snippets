@@ -68,7 +68,7 @@
             <div class="input-group-prepend">
               <span class="input-group-text">Avatar Source</span>
             </div>
-            
+            <%= form.hidden_field :avatar_url, :value => nil %>
             <%= form.select(:avatar_url_source, ['GitHub', 'StackOverflow'], {}, { :class => 'form-control' }) %>
           <div class="input-group-append">
                 <span class="input-group-text"><%= fa_icon "question-circle" %></span>

@@ -6,5 +6,4 @@ class User < ApplicationRecord
   has_one :profile
   has_many :snippet
   has_many :comment
-  has_many :favourite
 end

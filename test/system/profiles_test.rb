@@ -14,9 +14,6 @@ class ProfilesTest < ApplicationSystemTestCase
     visit profiles_url
     click_on "New Profile"
 
-    fill_in "Address", with: @profile.address
-    fill_in "Firstname", with: @profile.firstname
-    fill_in "Lastname", with: @profile.lastname
     fill_in "User", with: @profile.user_id
     click_on "Create Profile"
 
@@ -28,9 +25,6 @@ class ProfilesTest < ApplicationSystemTestCase
     visit profiles_url
     click_on "Edit", match: :first
 
-    fill_in "Address", with: @profile.address
-    fill_in "Firstname", with: @profile.firstname
-    fill_in "Lastname", with: @profile.lastname
     fill_in "User", with: @profile.user_id
     click_on "Update Profile"
 

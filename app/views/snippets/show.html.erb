@@ -3,7 +3,7 @@
     <div class="col-12">
         <div class="card">
             <div class="card-header show-card-header">
-                Author: <a href="/profiles/<%= @snippet.user_id %>">
+                Author: <a href="/profiles/<%= @profile.id %>">
                 <% if @profile.display_name.nil? %>
                 @<%= @user.email.split('@')[0] %>
                 <% else %>
