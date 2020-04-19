@@ -65,7 +65,8 @@ class ProfilesController < ApplicationController
 
   # GET /profiles/1/edit
   def edit
-    if current_user.id != params[:id]
+    user_id = params[:id]
+    if current_user.id != user_id.to_i
       redirect_to "/"
     end
   end
