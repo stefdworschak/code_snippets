@@ -13,13 +13,13 @@
         <div class="snip-card">
           <h5 class="snip-header"><a href="/snippets/<%= snippet.id %>"><%= snippet.title %></a>
             <span class="pull-right">
-              <% @snippets.user_id == current_user.id %>
+              <% if @snippets.user_id == current_user.id %>
                 <%= link_to 'Edit', edit_snippet_path(snippet) %> | 
                 <a href="#" class="copy-snippet" data-target="<%= snippet.id %>">Copy</a> |
                 <%= link_to 'Delete', snippet, method: :delete, data: { confirm: 'Are you sure?' } %>  
               <% else %>
                 <a href="#" class="copy-snippet" data-target="<%= snippet.id %>">Copy</a>
-              <% endif %>     
+              <% end %>     
             </span>
           </h5>
           <div class="snip-body"><pre class="cm-read-only"><%= snippet.code %></pre></div>
