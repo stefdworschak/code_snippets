@@ -137,7 +137,7 @@ class SnippetsController < ApplicationController
 
       @created_days_ago = (now - @snippet.created_at.to_date).to_i
       @updated_days_ago = (now - @snippet.updated_at.to_date).to_i
-      @avatar = @profile.avatar_url
+      @avatar = Profile.find_by_user_id(current_user.id).avatar_url
 
       @reputation = {}
       @comments.each do |comment|

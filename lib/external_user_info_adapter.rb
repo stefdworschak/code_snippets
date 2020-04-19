@@ -49,6 +49,30 @@ class ExternalUserInfoAdapter
         end
     end
 
+    def get_stackoverflow_link user_id
+        profile = Profile.find_by_user_id(user_id)
+        if profile.nil?
+            return nil
+        elsif profile.stackoverflow_name.nil?
+            return nil
+        else
+            stackoverflow = get_stack_overflow_data(profile.stackoverflow_name)
+            if stackoverflow['status'] != "200"
+                return nil
+            else
+                stackoverflow_results = stackoverflow['message'].fetch('items',[])
+                # Neeeded because therer could be multiple partial matches as well
+                stackoverflow_results.each do |user|
+                    if profile.stackoverflow_name.to_s.empty?
+                        return nil
+                    elsif user['display_name'].to_s.downcase == profile.stackoverflow_name.to_s.downcase
+                        return user['link']
+                    end
+                end
+            end
+        end
+    end
+
     def get_user_reputation user_id
         stackoverflow_rep = nil
         github_rep = nil

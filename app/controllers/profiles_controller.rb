@@ -32,25 +32,25 @@ class ProfilesController < ApplicationController
   # GET /profiles/1
   # GET /profiles/1.json
   def show
+    @stackoverflow_url = "#"
     settings = {
         "github_api_user" => ENV['GITHUB_API_USER'],
         "github_api_token" => ENV['GITHUB_API_TOKEN'],
         "stackoverflow_key" => ENV['STACKOVERFLOW_KEY']
     }
-    
-    profile = Profile.find_by_user_id(current_user.id)
-    if profile.avatar_url.nil?
-      external_info = ExternalUserInfoAdapter.instance()
-      external_info.set_settings(settings)
-      @avatar = external_info.get_user_avatar_url(params[:id])
+    external_info = ExternalUserInfoAdapter.instance()
+    external_info.set_settings(settings)
+    profile = Profile.find(params[:id])
+    if profile.avatar_url.to_s.empty?
+      @avatar = external_info.get_user_avatar_url(profile.user_id)
       if !@avatar.nil?
-        user = Profile.find_by_user_id(current_user.id)
-        user.update(avatar_url: @avatar)
+        profile.update(avatar_url: @avatar)
       end
-    else 
+    else
       @avatar = profile.avatar_url
     end
-    @snippets = Snippet.where(:user_id => current_user.id)
+    @stackoverflow_link = external_info.get_stackoverflow_link(profile.user_id)
+    @snippets = Snippet.where(:user_id => profile.user_id)
     @snippet = Snippet.new
   end
 
@@ -116,6 +116,6 @@ class ProfilesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def profile_params
-      params.require(:profile).permit(:user_id, :display_name, :github_name, :stackoverflow_name, :stackoverflow_userid, :avatar_url_source)
+      params.require(:profile).permit(:user_id, :display_name, :github_name, :stackoverflow_name, :stackoverflow_userid, :avatar_url, :avatar_url_source)
     end
 end

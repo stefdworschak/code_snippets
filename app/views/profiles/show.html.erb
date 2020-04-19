@@ -20,12 +20,12 @@
 
   <p>
     <strong>GitHub:</strong><br />
-    <a href=""><%= @profile.github_name %></a>
+    <a href="https://github.com/<%= @profile.github_name %>" target="_blank"><%= @profile.github_name %></a>
   </p>
 
   <p>
     <strong>StackOverflow:</strong><br />
-    <a href=""><%= @profile.stackoverflow_name %></a>
+    <a href="<%= @stackoverflow_link %>" target="_blank"><%= @profile.stackoverflow_name %></a>
   </p>
   <P>
     <% if current_user.id == @profile.user_id %>

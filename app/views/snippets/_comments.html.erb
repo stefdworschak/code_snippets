@@ -9,20 +9,19 @@
                 
                 <div class="row comment-header-row">
                     <div class="col-1 comment-header">
-
-                        <% if comment.avatar_url_source.nil? and comment.avatar_url.nil?  %>
+                        <% if comment.avatar_url_source.nil? and comment.avatar_url.to_s.empty?  %>
                             <%= image_tag "profile_placeholder.png",
                                 style: "width:35px;" %>
-                        <% elsif !comment.avatar_url.nil?  %>
+                        <% elsif !comment.avatar_url.to_s.empty?  %>
                             <%= image_tag comment.avatar_url,
                                 style: "width:35px;" %>
                         <% else %>
                             <% if comment.avatar_url_source == "GitHub" \
-                                  and !@reputation[comment.user_id]['github']['avatar_url'].nil? %>
+                                  and !@reputation[comment.user_id]['github']['avatar_url'].to_s.empty? %>
                                     <%= image_tag @reputation[comment.user_id]['github']['avatar_url'],
                                         style: "width:35px;" %>
                             <% elsif comment.avatar_url_source == "StackOverflow" \
-                                     and !@reputation[comment.user_id]['stackoverflow']['profile_image'].nil? %>
+                                     and !@reputation[comment.user_id]['stackoverflow']['profile_image'].to_s.empty? %>
                                     <%= image_tag @reputation[comment.user_id]['stackoverflow']['profile_image'],
                                         style: "width:35px;" %>
                             <% else %>
@@ -70,7 +69,7 @@
                 <div class="card-body">
                     <div class="row new-comment-row">
                         <div class="col-1">
-                        <% if @avatar.nil? %>
+                        <% if @avatar.to_s.empty? %>
                             <%= image_tag "profile_placeholder.png",
                             style: "min-width:30px; width:100%;" %>
                         <% else %>
