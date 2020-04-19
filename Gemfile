@@ -80,7 +80,11 @@ gem 'basic_auth_http'
 group :test do
   gem 'minitest-reporters'
 end
-gem 'sqlite3'
+
+group :development do
+  # Use sqlite3 as the database for Active Record
+  gem 'sqlite3'
+end
 
 group :production do
   gem 'pg'
